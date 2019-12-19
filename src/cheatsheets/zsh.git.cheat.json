@@ -1,0 +1,12 @@
+[
+  {
+    "title": "git add",
+    "tags": ["git", "add"],
+    "command": "ga"
+  },
+  {
+    "title": "git pull",
+    "tags": ["git", "pull"],
+    "command": "gl"
+  }
+]
