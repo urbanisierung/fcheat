@@ -1,5 +1,9 @@
 import * as inquirer from "inquirer";
 import * as autocompleteprompt from "inquirer-autocomplete-prompt";
+import { Cheat } from "../types/cheat";
+import { CheatSheetLoader } from "../utils/cheatsheet.loader";
+import * as clipboardy from "clipboardy";
+import * as chalk from "chalk";
 
 export interface item {
   title: string;
@@ -8,18 +12,12 @@ export interface item {
 }
 
 export class FCheat {
-  private cheatSheet: item[] = [
-    {
-      title: "kubectl connect to a pod",
-      tags: ["kubectl", "k8s", "pod", "connect"],
-      command: "kubectl exec -it -n ${namespace} ${pod} -- /bin/bash"
-    },
-    {
-      title: "kubectl get current context",
-      tags: ["kubectl", "k8s", "context"],
-      command: "kubectl config current-context"
-    }
-  ];
+  private cheatSheet: Cheat[];
+
+  constructor(private pathToCheatSheets: string) {
+    const loader = new CheatSheetLoader();
+    this.cheatSheet = loader.readCheatSheets(pathToCheatSheets);
+  }
 
   public async registerPrompt() {
     inquirer.registerPrompt("autocomplete", autocompleteprompt);
@@ -33,21 +31,37 @@ export class FCheat {
           source: async (answers, input) => await this.filter(input)
         }
       ])
-      .then(a => console.log(`answers: ${JSON.stringify(a)}`));
+      .then(answers => {
+        const cheat: Cheat = answers.cheatsheet;
+        clipboardy.writeSync(cheat.command);
+        console.log(chalk.italic("copied command to clipboard"));
+      });
   }
 
-  private async filter(input: string): Promise<string[]> {
+  private async filter(input: string) {
     if (input && input.length > 2) {
       return new Promise(resolve => {
         resolve(
           this.cheatSheet
             .filter(c => c.title.includes(input))
-            .map(c => `${c.command} (${c.title})`)
+            .map(c => {
+              return {
+                name: c.command,
+                value: c
+              };
+            })
         );
       });
     }
     return new Promise(resolve => {
-      resolve(this.cheatSheet.map(c => `${c.command} (${c.title})`));
+      resolve(
+        this.cheatSheet.map(c => {
+          return {
+            name: c.command,
+            value: c
+          };
+        })
+      );
     });
   }
 }
