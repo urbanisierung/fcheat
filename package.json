@@ -1,5 +1,5 @@
 {
-  "name": "fcheat",
+  "name": "fcheat-cli",
   "version": "1.0.0",
   "description": "Fabulous cheat sheet",
   "homepage": "https://github.com/urbanisierung/fcheat",
@@ -24,6 +24,7 @@
     "cli-app",
     "cli",
     "fcheat",
+    "fcheat-cli",
     "cheatsheets"
   ],
   "license": "MIT",
