@@ -8,7 +8,9 @@
     "url": "https://github.com/urbanisierung/fcheat"
   },
   "main": "cli.ts",
-  "bin": "dist/cli.js",
+  "bin": {
+    "fcheat": "dist/cli.js"
+  },
   "scripts": {
     "start": "ts-node ./src/cli.ts",
     "build": "tsc --p tsconfig.json",
