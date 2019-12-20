@@ -5,22 +5,16 @@ import { CheatSheetLoader } from "../utils/cheatsheet.loader";
 import * as clipboardy from "clipboardy";
 import * as chalk from "chalk";
 
-export interface item {
-  title: string;
-  tags?: string[];
-  command: string;
-}
-
 export class FCheat {
   private cheatSheet: Cheat[];
 
   constructor(
     private pathToCheatSheets: string,
     private pageSize: number,
-    private details: boolean
+    private nodetails: boolean
   ) {
     const loader = new CheatSheetLoader();
-    this.cheatSheet = loader.readCheatSheets(pathToCheatSheets);
+    this.cheatSheet = loader.readCheatSheets(this.pathToCheatSheets);
   }
 
   public async registerPrompt() {
@@ -47,7 +41,7 @@ export class FCheat {
       return new Promise(resolve => {
         resolve(
           this.cheatSheet
-            .filter(c => c.title.includes(input))
+            .filter(c => this.find(c, input))
             .map(c => this.getCheat(c))
         );
       });
@@ -57,9 +51,23 @@ export class FCheat {
     });
   }
 
+  private find(cheat: Cheat, input: string) {
+    if (!input.includes(" ")) {
+      return (
+        cheat.title.includes(input) ||
+        (cheat.tags && cheat.tags.includes(input))
+      );
+    }
+    const splitted = input.split(" ");
+    const found = splitted.map(i => {
+      return cheat.title.includes(i) || (cheat.tags && cheat.tags.includes(i));
+    });
+    return found.every(f => f === true);
+  }
+
   private getCheat(cheat: Cheat) {
-    const name = this.details
-      ? cheat.command + " " + chalk.gray(`(${cheat.title})`)
+    const name = !this.nodetails
+      ? cheat.command + " " + chalk.gray(cheat.title)
       : cheat.command;
     return {
       name,

@@ -9,7 +9,7 @@ dotenv.config();
 
 const FCHEAT_CHEATSDIR = process.env.FCHEAT_CHEATSDIR
   ? process.env.FCHEAT_CHEATSDIR
-  : `${os.homedir()}/.config/fcheat`;
+  : `${os.homedir()}/.config/fcheatsheets`;
 
 const cli = meow(
   `
@@ -18,8 +18,10 @@ const cli = meow(
       
       Options
         --cheatdir, -c set directory with cheatsheets
-        --pagesize, -p specify the shown page size
-        --details, -d in addition to the command also show the description
+                       set permanently via env var FCHEAT_CHEATSDIR
+                       default: ~/.config/fcheatsheets/
+        --pagesize, -p specify the shown page size (default: 10)
+        --nodetails, -n show only command in overview
 
       Examples
         $ fcheat -p 5
@@ -31,9 +33,9 @@ const cli = meow(
         alias: "p",
         default: 10
       },
-      details: {
+      nodetails: {
         type: "boolean",
-        alias: "d",
+        alias: "n",
         default: false
       },
       cheatdir: {
@@ -46,7 +48,7 @@ const cli = meow(
 );
 
 async function prompt(flags) {
-  const fcheat = new FCheat(flags.cheatdir, flags.pagesize, flags.details);
+  const fcheat = new FCheat(flags.cheatdir, flags.pagesize, flags.nodetails);
   await fcheat.registerPrompt();
 }
 
