@@ -2,18 +2,30 @@
   "name": "fcheat",
   "version": "1.0.0",
   "description": "Fabulous cheat sheet",
+  "homepage": "https://github.com/urbanisierung/fcheat",
   "repository": {
     "type": "git",
     "url": "https://github.com/urbanisierung/fcheat"
   },
-  "main": "index.ts",
+  "main": "cli.ts",
+  "bin": "dist/cli.js",
   "scripts": {
-    "start": "ts-node ./src/index.ts",
+    "start": "ts-node ./src/cli.ts",
     "build": "tsc --p tsconfig.json",
-    "dist": "node dist/index.js",
+    "dist": "node dist/cli.js",
     "test": "jest"
   },
-  "author": "",
+  "author": {
+    "name": "Adam Urban",
+    "email": "adam.urban@gmail.com",
+    "url": "http://www.adamurban.de"
+  },
+  "keywords": [
+    "cli-app",
+    "cli",
+    "fcheat",
+    "cheatsheets"
+  ],
   "license": "MIT",
   "dependencies": {
     "@types/node": "^12.7.1",
@@ -21,11 +33,10 @@
     "canvas": "^2.5.0",
     "chalk": "^3.0.0",
     "clipboardy": "^2.1.0",
-    "dotenv": "^8.0.0",
-    "image-js": "^0.21.7",
+    "dotenv": "^8.2.0",
     "inquirer": "^7.0.1",
     "inquirer-autocomplete-prompt": "^1.0.1",
-    "uuid": "^3.3.3"
+    "meow": "^6.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "^3.4.0",

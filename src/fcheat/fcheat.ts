@@ -14,7 +14,11 @@ export interface item {
 export class FCheat {
   private cheatSheet: Cheat[];
 
-  constructor(private pathToCheatSheets: string) {
+  constructor(
+    private pathToCheatSheets: string,
+    private pageSize: number,
+    private details: boolean
+  ) {
     const loader = new CheatSheetLoader();
     this.cheatSheet = loader.readCheatSheets(pathToCheatSheets);
   }
@@ -27,7 +31,7 @@ export class FCheat {
           name: "cheatsheet",
           message: "CheatSheet:",
           type: "autocomplete",
-          pageSize: 10,
+          pageSize: this.pageSize,
           source: async (answers, input) => await this.filter(input)
         }
       ])
@@ -44,24 +48,22 @@ export class FCheat {
         resolve(
           this.cheatSheet
             .filter(c => c.title.includes(input))
-            .map(c => {
-              return {
-                name: c.command,
-                value: c
-              };
-            })
+            .map(c => this.getCheat(c))
         );
       });
     }
     return new Promise(resolve => {
-      resolve(
-        this.cheatSheet.map(c => {
-          return {
-            name: c.command,
-            value: c
-          };
-        })
-      );
+      resolve(this.cheatSheet.map(c => this.getCheat(c)));
     });
+  }
+
+  private getCheat(cheat: Cheat) {
+    const name = this.details
+      ? cheat.command + " " + chalk.gray(`(${cheat.title})`)
+      : cheat.command;
+    return {
+      name,
+      value: cheat
+    };
   }
 }
