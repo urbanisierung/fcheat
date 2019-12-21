@@ -54,13 +54,16 @@ export class FCheat {
   private find(cheat: Cheat, input: string) {
     if (!input.includes(" ")) {
       return (
-        cheat.title.includes(input) ||
-        (cheat.tags && cheat.tags.includes(input))
+        cheat.title.startsWith(input) ||
+        (cheat.tags && cheat.tags.find(t => t.startsWith(input)))
       );
     }
     const splitted = input.split(" ");
     const found = splitted.map(i => {
-      return cheat.title.includes(i) || (cheat.tags && cheat.tags.includes(i));
+      return (
+        cheat.title.startsWith(i) ||
+        (cheat.tags && cheat.tags.find(t => t.startsWith(i)))
+      );
     });
     return found.every(f => f === true);
   }
