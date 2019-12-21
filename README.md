@@ -8,9 +8,32 @@
 
 `fcheat` is for all who cannot remember all the commands ;)
 
-...
+[![asciicast](https://asciinema.org/a/289687.svg)](https://asciinema.org/a/289687)
 
-## Prerequisites
+## Usage
+
+```bash
+  Fabulous cheat sheet
+
+  Usage
+    $ fcheat <options>
+
+  Options
+    --cheatdir, -c set directory with cheatsheets
+                   set permanently via env var FCHEAT_CHEATSDIR
+                   default: ~/.config/fcheatsheets/
+    --pagesize, -p specify the shown page size (default: 10)
+    --nodetails, -n show only command in overview
+
+  Examples
+    $ fcheat -p 5
+```
+
+## Cheatsheets
+
+You need cheatsheet files as source for `fcheat`. Use the repo [`fcheatsheets`](https://github.com/urbanisierung/fcheatsheets) as starting point.
+
+## Development
 
 Before you begin, ensure you have met the following requirements:
 
@@ -37,9 +60,9 @@ npm run start
 To contribute to `fcheat`, follow these steps:
 
 1. Fork this repository.
-2. Create a branch: `git checkout -b <branch_name>`.
-3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin urbanisierung/fcheat`
+2. Create a branch.
+3. Make your changes and commit them.
+4. Push to the original branch.
 5. Create the pull request.
 
 Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
