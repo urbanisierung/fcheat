@@ -8,7 +8,7 @@
 
 `fcheat` is for all who cannot remember all the commands ;)
 
-[![asciicast](https://asciinema.org/a/289687.svg)](https://asciinema.org/a/289687)
+![fcheat](media/fcheat.gif)
 
 ## Usage
 
