@@ -8,9 +8,17 @@
 
 `fcheat` is for all who cannot remember all the commands ;)
 
-![fcheat](media/fcheat.gif)
+![fcheat](https://github.com/urbanisierung/fcheat/raw/master/media/fcheat.gif)
 
 ## Usage
+
+Specify a location for your cheatsheets (or use default `~/.config/fcheatsheets/`):
+
+```bash
+FCHEAT_CHEATSDIR = ~/.config/my-cheatsheets/
+```
+
+Use `fcheat`:
 
 ```bash
   Fabulous cheat sheet
